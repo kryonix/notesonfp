@@ -25,6 +25,7 @@
 
 \definecolor{mintedbackground}{rgb}{0.95,0.95,0.95}
 \newmintedfile[Haskellcode]{Haskell}{
+breaklines=true,
 bgcolor=mintedbackground,
 fontfamily=tt,
 linenos=true,
@@ -39,11 +40,11 @@ funcnamehighlighting=true,
 tabsize=4,
 obeytabs=false,
 escapeinside=@@,
-mathescape=true
+mathescape=true,
 samepage=false, %with this setting you can force the list to appear on the same page
 showspaces=false,
 showtabs =false,
-texcl=false,
+texcl=false
 }
 
 \newminted[Haskell]{Haskell}{
@@ -61,7 +62,7 @@ funcnamehighlighting=true,
 tabsize=4,
 obeytabs=false,
 escapeinside=@@,
-mathescape=true
+mathescape=true,
 samepage=false, %with this setting you can force the list to appear on the same page
 showspaces=false,
 showtabs =false,

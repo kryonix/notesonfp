@@ -2,41 +2,43 @@
 
 % Author: Philipp Moers <soziflip funny character gmail dot com>
 
-\chapter{Type Classes} % (fold)
+\section{Type Classes} % (fold)
 \label{cha:type_classes}
 
-A \textbf{type class} C defines a family of type signatures („methods“) which all \textbf{instances} of C must implement.
+A \textbf{type class} C defines a family of type signatures (''methods'') which all \textbf{instances} of C must implement.
 
-\begin{codebox}[haskell]
+\begin{Haskell}
 class C a where
     f@$_1$@ :: t@$_1$@
     @\dots@
     f@$_n$@ :: t@$_n$@
-\end{codebox}
-The \codeline{t$_i$} \underline{must} mention a.\\
-For any \codeline{f$_i$} the class may provide default implementations. \\
-We have \codeline{f$_i$ :: C a => t$_i$} \\ (read „if a is instance C then f$_i$ has type t$_i$“).\\
+\end{Haskell}
+
+The \codeline{t|$_i$|} \underline{must} mention a.\\
+For any \codeline{f|$_i$|} the class may provide default implementations. \\
+We have \codeline{f|$_i$| :: C a => t|$_i$|} \\ (read ''if a is instance C then f$_i$ has type t$_i$'').\\
 \codeline{C a} is called \textbf{class constraint}.
 
 \textit{Example}:
 
-\begin{codebox}[haskell]
+\begin{Haskell}
 class Eq a where
     (==) :: a -> a -> Bool
     (/=) :: a -> a -> Bool
     x == y = not (x /= y)
     x /= y = not (x == y)
-\end{codebox}
+\end{Haskell}
+
 (These are default implementations. To redefine one of them is sufficient.)
 
 % \codefile{haskell}{caption={type-classes.hs}, label=type-classes.hs}{../material/type-classes.hs}
 
 
-\section{Class Inheritance}
+\subsection{Class Inheritance}
 
 \begin{itemize}
-    \item Defining \codeline{class (c$_1$ a, c$_2$ a, \dots) => C a where \dots} makes type class C a subclass of the C$_i$.\\
-    \item \codeline{C a => t} implies \codeline{C$_1$ a, C$_2$ a \dots}.
+    \item Defining \codeline{class (c|$_1$| a, c|$_2$| a, |\dots|) => C a where |\dots|} makes type class C a subclass of the C$_i$.
+    \item \codeline{C a => t} implies \codeline{C|$_1$| a, C|$_2$| a |\dots|}.
 \end{itemize}
 
 % \vspace{9pt}
@@ -45,45 +47,44 @@ class Eq a where
 % \vspace{9pt}
 
 
-\section{Class Instances}
+\subsection{Class Instances}
 
-If type t implements the methods of class C, t becomes an \textbf{instance of} C:
-\begin{codebox}[haskell]
+If type t implements the methods of class C, t becomes an \textbf{instance of} C:\\
+\begin{Haskell}
 instance C t where
     f@$_1$@ = <def of f@$_1$@>
     @\dots@
     f@$_n$@ = <def of f@$_n$@>
-\end{codebox}
+\end{Haskell}
+
 (All defs of f$_i$ may be provided, minimal complete definition \underline{must} be provided.)
 Class constraint C t is satisfied from now on.
 
-\textit{Example}:
-
-\begin{codebox}[haskell]
+\textit{Example}:\\
+\begin{Haskell}
 instance Eq Bool where
     x == y = x && y || (not x && not y)
-\end{codebox}
+\end{Haskell}
 
-An instance definition for type constructor t may formulate class constraints for its argument types a, b, \dots:\\
-\codeline{instance (C$_1$ a, C$_2$ a, \dots) => C t where}
+An instance definition for type constructor t may formulate class constraints for its argument types a, b, \dots:
+\codeline{instance (C|$_1$| a, C|$_2$| a, |\dots|) => C t where}
 
+\begin{mdframed}[linecolor=black, topline=false, bottomline=false,
+  leftline=false, rightline=false, backgroundcolor=mintedbackground]
+    \inputminted[fontfamily=tt]{Haskell}{../material/rock-paper-scissor-inst.hs}
+    %\Haskellcode{../material/rock-paper-scissor-inst.hs}
+\end{mdframed}
 
-\codefile{haskell}{caption={rock-paper-scissor-inst.hs}, label=rock-paper-scissor-inst.hs}{../material/rock-paper-scissor-inst.hs}
+\subsubsection{Deriving Class Instances}
 
+Automatically make user-defined data types (\codeline{data |\dots|}) instances of classes C$_i$ $\in$ \{ Eq, Ord, Enum, Bounded, Show, Read \}:
 
-\subsection{Deriving Class Instances}
-
-Automatically make user-defined data types (\codeline{data \dots}) instances of classes C$_i$ $\in$ \{ Eq, Ord, Enum, Bounded, Show, Read \}:
-
-\begin{codebox}[haskell]
+\begin{Haskell}
 data T a@$_1$@ a@$_1$@ @\dots@ a@$_n$@ = @\dots@
                    | @\dots@
     deriving (C@$_1$@, C@$_2$@, @\dots@)
-\end{codebox}
+\end{Haskell}
 
-\codefile{haskell}{caption={rock-paper-scissor-inst-deriving.hs}, label=rock-paper-scissor-inst-deriving.hs}{../material/rock-paper-scissor-inst-deriving.hs_ASCII}
-
-
-
+\Haskellcode{../material/rock-paper-scissor-inst-deriving.hs_}
 
 % chapter type_classes (end)

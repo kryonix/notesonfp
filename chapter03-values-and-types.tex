@@ -8,7 +8,7 @@
 Any Haskell expression e has a type t (\codeline{e :: t}) that is determined at compile time.
 The \textbf{type assigmnent ::} is either given explicitly or inferred by the compiler.
 
-\section{Base Types}
+\subsection{Base Types}
 \begin{center}
 \begin{tabular}{|c|c|c|}\hline
 \rowcolor{grau}     
@@ -23,7 +23,7 @@ Bool            		& Boolean                                       	  & True, Fal
 \end{center}
 
 
-\section{Type Constructors}
+\subsection{Type Constructors}
 
 \begin{itemize}
     \item Build new types from existing types
@@ -48,7 +48,7 @@ Bool            		& Boolean                                       	  & True, Fal
 \end{tabular}
 \end{center}
 
-\section{Currying}
+\subsection{Currying}
 
 \begin{itemize}
   \item \textit{Recall}: \codeline{e|$_1$| ++ e|$_2$| |$\equiv$| (++) e|$_1$| e|$_2$|}
@@ -60,7 +60,7 @@ Bool            		& Boolean                                       	  & True, Fal
 \end{itemize}
 
 
-\section{Defining Values (and thus functions)}
+\subsection{Defining Values (and thus functions)}
 
 \begin{itemize}
   \item \codeline{=} binds names to values. Names must not start with A-Z (Haskell style: camelCase)
@@ -148,8 +148,8 @@ f p@$_n1$@ @\dots@ p@$_nk$@ = e@$_k$@
   \end{Haskell}
 
 \end{itemize}
-
-\vspace{9pt}\begin{center}\begin{tabular}{|c|c|c|}\hline
+\begin{center}
+\begin{tabular}{|c|c|c|}\hline
 \rowcolor{grau}   
 Pattern         & Matches If                & Bindings in e$_r$     \\\hline
   constant c      & x$_i$ == c                  &                     \\\hline
@@ -158,14 +158,15 @@ Pattern         & Matches If                & Bindings in e$_r$     \\\hline
   tuple (p$_1$, \dots p$_m$)  & components of x$_i$ match patterns p    & \\\hline
   []              & x$_i$ == []                 &                     \\\hline
   (p$_1$ : p$_2$)     & head x$_i$ matches p$_1$, tail x$_i$ matches p$_2$    & \\\hline
-\end{tabular}\end{center}\vspace{9pt}
+\end{tabular}
+\end{center}
 
 \Haskellcode{../material/tally.hs}
 \Haskellcode{../material/take.hs}
 \Haskellcode{../material/mergesort.hs}
 
 
-\section{Algebraic Data Types}
+\subsection{Algebraic Data Types}
 
 (also known as \textbf{Sum-of-Product-Types})
 
@@ -207,7 +208,7 @@ data Either a b = Left a | Right b
 data List a = Nil | Cons a (List a)
 \end{Haskell}
 
-    \Haskellcode{../material/cons.hs}
+\Haskellcode{../material/cons.hs}
 
 \begin{Haskell}
 -- Use the isomorphism between [a] and List a
