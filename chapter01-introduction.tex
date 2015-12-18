@@ -3,13 +3,11 @@
 % Author: Philipp Moers <soziflip funny character gmail dot com>
 
 
-\chapter{Introduction} % (fold)
+\section{Introduction} % (fold)
 \label{cha:introduction}
 
 Computational model in Functional Programming: \textbf{reduction} (replace expression to values)
-
 In Functional Programming, expressions are formed by applying functions to values.
-
 \begin{enumerate}
     \item Functions as in math: $x = y \Rightarrow f(x) = f(y)$
     \item Functions are values (just like numbers, text \dots)
@@ -22,14 +20,10 @@ In Functional Programming, expressions are formed by applying functions to value
                 semantics               & lambda calculus                           & complex (denotational)    \\\hline
 \end{tabular}\end{center}\vspace{9pt}
 
-\newpage
-
 \subsection*{Example}
-$n \in \N, n \ge 2 $ is a prime number \textit{iff} the set of non-trivial factors is empty:\\
+$n \in \N, n \ge 2 $ is a prime number \textit{if} the set of non-trivial factors is empty:\\
 $$ n \text{ is prime} \Leftrightarrow \{\ m\ |\ m \in \{2,\dots, n-1\},\ n \mod m = 0 \} = \emptyset $$
 \\
-\codefile{haskell}{caption={isPrime.hs}, label=codefile:isPrime.hs}{../material/isPrime.hs}
-
-
+\Haskellcode{../material/isPrime.hs}
 
 % chapter introduction (end)

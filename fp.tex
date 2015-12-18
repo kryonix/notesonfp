@@ -1,22 +1,38 @@
 % Author: Philipp Moers <soziflip funny character gmail dot com>
 
-\documentclass[12pt, oneside, a4paper, numbers=enddot, abstracton]{scrreprt}
+% \documentclass[12pt, oneside, a4paper, numbers=enddot, abstracton]{scrreprt}
+\documentclass[12pt,a4paper]{article}
 
-\input{/home/flip/daten/latex/sfliptex05/sfliptex05.tex}
+\input{definitions.tex}
 
 \begin{document}
-\selectlanguage{english}
+% \selectlanguage{english}
 
 \begin{titlepage}
     \begin{center}
-        \Large{Universität Tübingen}\\[1cm]
-        \large{\scshape{SS 2014}}\\
-        \large{\scshape{Torsten Grust, Alexander Ulrich}}\\[3cm]
-        \Huge{\textbf{Functional Programming}}\\[6cm]
-        \large{Notes from}\\[1cm]
-        \large{Philipp Moers \\ <soziflip funnycharacter gmail dot com>}\\[3cm]
+        \includegraphics[width=0.7\textwidth]{logo-uni-tuebingen}\\[1cm]
+
+        % Title
+        \newcommand{\HRule}{\rule{\linewidth}{0.5mm}} \HRule \\[0.4cm]
+        { \huge \bfseries Functional Programing}\\[0.4cm]
+
+        \textsc{\Large Sommersemester 2014, Wintersemester 2015}\\[0.5cm]
+        \HRule \\[1.5cm]
+
+        \begin{minipage}{0.4\textwidth}
+            \begin{flushleft}
+                \large \emph{Author:}\\ Philipp Moers, Update by: Denis Hirn
+            \end{flushleft}
+        \end{minipage}
+            \hfill
+        \begin{minipage}{0.4\textwidth}
+            \begin{flushright}
+                \large \emph{Dozent:} \\ \scshape{Torsten Grust, Alexander Ulrich}
+            \end{flushright}
+        \end{minipage}
+
         \vfill
-        \footnotesize{Last updated: \today, \currenttime}
+        {Last updated: \today, \currenttime}
     \end{center}
 \end{titlepage}
 
@@ -40,13 +56,13 @@
 \newpage
 
 
-\section{Links}
+\section*{Links}
 
 Site: \url{http://db.inf.uni-tuebingen.de/teaching/FunctionalProgrammingSS2014.html}\\
 Ilias: \url{http://goo.gl/rlqbkK}
 
 
-\section{Literature}
+\section*{Literature}
 
 \begin{itemize}
     \item Lipovača: \\ Learn You a Haskell for Great Good \\ No Starch Press 2011, \\ \url{http://learnyouahaskell.com}
@@ -56,20 +72,22 @@ Ilias: \url{http://goo.gl/rlqbkK}
 
 
 % chapters:
-
+\pagebreak
 \input{chapter01-introduction.tex}
 
+\pagebreak
+\newcommand{\codeline}[1]{\mintinline[escapeinside=||,mathescape=true]{Haskell}{#1}}
 \input{chapter02-haskell-ramp-up.tex}
-
-\input{chapter03-values-and-types.tex}
-
-\input{chapter04-type-classes.tex}
-
-\input{chapter05-domain-specific-languages.tex}
-
-\input{chapter06-monads.tex}
-
-\input{chapter07-parallelism.tex}
+%
+% \input{chapter03-values-and-types.tex}
+%
+% \input{chapter04-type-classes.tex}
+%
+% \input{chapter05-domain-specific-languages.tex}
+%
+% \input{chapter06-monads.tex}
+%
+% \input{chapter07-parallelism.tex}
 
 
 \end{document}

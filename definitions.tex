@@ -1,0 +1,138 @@
+\usepackage[utf8x]{inputenc}
+\usepackage{lscape}
+\usepackage[ngerman, english]{babel}
+% \usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{array}
+\usepackage{paralist}
+\usepackage{tabularx}
+\usepackage{listings}
+\usepackage{multicol}
+\usepackage{mdframed}
+\usepackage{url}
+\usepackage[lined,boxed,commentsnumbered]{algorithm2e}
+\usepackage{xcolor}
+\usepackage{minted}
+\usepackage{datetime}
+\usepackage{colortbl}
+
+\definecolor{grau}{rgb}{0.75,0.75,0.75}
+
+\definecolor{mintedbackground}{rgb}{0.95,0.95,0.95}
+\newmintedfile[Haskellcode]{Haskell}{
+bgcolor=mintedbackground,
+fontfamily=tt,
+linenos=true,
+numberblanklines=true,
+numbersep=12pt,
+numbersep=5pt,
+gobble=0,
+frame=leftline,
+framerule=0.4pt,
+framesep=2mm,
+funcnamehighlighting=true,
+tabsize=4,
+obeytabs=false,
+mathescape=false
+samepage=false, %with this setting you can force the list to appear on the same page
+showspaces=false,
+showtabs =false,
+texcl=false,
+}
+
+\newminted[Haskell]{Haskell}{
+bgcolor=mintedbackground,
+fontfamily=tt,
+linenos=true,
+numberblanklines=true,
+numbersep=12pt,
+numbersep=5pt,
+gobble=0,
+frame=leftline,
+framerule=0.4pt,
+framesep=2mm,
+funcnamehighlighting=true,
+tabsize=4,
+obeytabs=false,
+mathescape=false
+samepage=false, %with this setting you can force the list to appear on the same page
+showspaces=false,
+showtabs =false,
+texcl=false,
+}
+
+%\usepackage{algpseudocode}
+
+\usepackage{textcomp}
+%\usepackage{ulsy}
+\usepackage{array}
+%Bäume, Automaten:
+%\usepackage{qtree}
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata}
+
+\usepackage{calc}
+\usepackage{wasysym}
+
+\newlength\celldim \newlength\fontheight \newlength\extraheight
+\newcounter{sqcolumns}
+
+\newcolumntype{S}{ @{}
+  >{\centering \rule[-0.5\extraheight]{0pt}{\fontheight + \extraheight}}
+  p{\celldim} @{} }
+
+\newcolumntype{Z}{ @{} >{\centering} p{\celldim} @{} }
+
+\newenvironment{squarecells}[1]
+  {\setlength\celldim{3em}%
+   \settoheight\fontheight{A}%
+   \setlength\extraheight{\celldim - \fontheight}%
+   \setcounter{sqcolumns}{#1 - 1}%
+   \begin{tabular}{|S|*{\value{sqcolumns}}{Z|}}\hline}
+% squarecells tabular goes here
+  {\end{tabular}}
+
+%\newcommand\nl{\tabularnewline\hline}
+
+\author{Denis Hirn}
+\title{FP Additional}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\renewcommand{\i}{\mathtt{i}}
+\renewcommand{\b}{\mathtt{b}}
+\newcommand{\integer}{\ensuremath{\mathtt{integer}}}
+
+\addtolength{\textwidth}{80px}
+\addtolength{\hoffset}{-40px}
+\addtolength{\topmargin}{-30px}
+\addtolength{\textheight}{30px}
+
+\setlength{\headheight}{41.6px}
+
+\fancyheadoffset{20pt}
+
+\newcommand{\bbl}{\textlbrackdbl{}}
+\newcommand{\bbr}{\textrbrackdbl{}}
+\newcommand{\Pot}{\ensuremath{\mathcal{P}}}
+
+\newcommand{\qq}[1]{\glqq #1 \grqq}
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\0}{\ensuremath{\mathcal{O}}}
+
+\newcommand{\abs}[1]{\ensuremath{ | #1 |}}
+\newcommand{\dol}{\ensuremath{\$ {}}}
+\newcounter{iabc}
+\newenvironment{abc}{\begin{list}{\alph{iabc})}{\usecounter{iabc}}}{\end{list}}

@@ -2,29 +2,27 @@
 
 % Author: Philipp Moers <soziflip funny character gmail dot com>
 
-\chapter{Haskell Ramp-Up} % (fold)
+\section{Haskell Ramp-Up} % (fold)
 \label{cha:haskell_ramp_up}
 
 (Read $\equiv$ as ``denotes the same value as'')
 
 \begin{itemize}
     \item Apply f to value e: \codeline{f e} (juxtaposition, ``apply'', binary operator \textvisiblespace, Haskell speak: infixL 10 \textvisiblespace)
-    \item \textvisiblespace\ has max precedence (10): \codeline{f e$_1$ + e$_2$} $\equiv$ \codeline{(f e$_1$) + e$_2$}
-    \item \textvisiblespace\ associates to the left: \codeline{g f e} $\equiv$ \codeline{(g f) e} \\ (\codeline{(g f)} is a function) \item Function composition: \begin{itemize}
-        \item \codeline{( g . f ) e} $\equiv$ \codeline{g (f e)} \\ (. is something like mathematical $\circ$ ``after'')
-        \item Alternative ``apply''-operator \codeline{\$} (lowest precedence, associates to the right, infixR 0 \$):\\
-            \codeline{g \$ f \$ e} $\equiv$ \codeline{g \$ (f \$ e)} $\equiv$ \codeline{g (f e)}
-        \item Prefix application of binary infix operator $\otimes$: \codeline{$(\otimes)$ e$_1$ e$_2$} $\equiv$ \codeline{e$_1$ $\otimes$ e$_2$} 
-        \item Infix application of binary function f: \codeline{e$_1$ `f` e$_2$} $\equiv$ \codeline{f e$_1$ e$_2$}:
+    \item \textvisiblespace\ has max precedence (10): \codeline{f |$e_1$| + |$e_2$| |$\equiv$| (f |$e_1$|) + |$e_2$|}
+    \item \textvisiblespace\ associates to the left: \codeline{g f e |$\equiv$| (g f) e --(g f) is a function)} 
+    \item Function composition:
+    \begin{itemize}
+        \item \codeline{(g . f) e |$\equiv$| g (f e) --(. is something like mathematical |$\circ$| ``after'')}
+        \item Alternative ``apply''-operator \codeline{|\$|} (lowest precedence, associates to the right, infixR 0 \$):\\
+            \codeline{g |\$| f |\$| e |$\equiv$| g |\$| (f |\$| e) |$\equiv$| g (f e)}
+        \item Prefix application of binary infix operator $\otimes$: \codeline{|$(\otimes)$| |$e_1$| |$e_2$| |$\equiv$| |$e_1$| |$\otimes$| |$e_2$|} 
+        \item Infix application of binary function f: \codeline{|$e_1$| `f` |$e_2$| |$\equiv$| f |$e_1$| |$e_2$|}:
         \begin{itemize}
-            \item \codeline{1 `elem` [1,2,3]}   ($1 \in \{1,2,3\}$)
+            \item \codeline{1 `elem` [1,2,3] --|($1 \in \{1,2,3\}$)|}
             \item \codeline{n `mod` m}
             \item \dots
         \end{itemize}
         \item User defined operators, built from symbols \\ ! \# \$ \% \& * + / < = > ? \@ \textbackslash \string^ \textbar $\sim$:.
     \end{itemize}
 \end{itemize} 
-
-
-% chapter haskell_ramp_up (end)
-
