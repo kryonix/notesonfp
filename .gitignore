@@ -7,3 +7,4 @@
 *.synctex.gz
 *.toc
 _minted-fp/
+.DS_Store
