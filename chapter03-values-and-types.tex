@@ -76,7 +76,7 @@ f x@$_1$@ x@$_2$@ = e
   \end{Haskell}
 \end{itemize}
 
-\subsection{Guards}
+\subsubsection{Guards}
 
 Guards are conditional expressions (something like ``switch'' in Java).
 They are a lot more readable and more powerful than \codeline{if |\dots| then |\dots| else |\dots|}.
@@ -95,7 +95,7 @@ Guards (q$_i$) are expressions of type Bool, evaluated top to bottom.
 
 \Haskellcode{../material/factorial.hs}
 
-\subsection{Local Definitions}
+\subsubsection{Local Definitions}
 
 \begin{enumerate}
   \item \textbf{Where bindings}: local definitions visible in the entire rhs of a definition.\\
@@ -123,7 +123,7 @@ in e
   \end{Haskell}
 \end{enumerate}
 
-\subsection{Lists}
+\subsubsection{Lists}
 
 \begin{itemize}
   \item Recursive definitions:
@@ -137,7 +137,7 @@ in e
       \codeline{head xs : tail xs} == xs
 \end{itemize}
 
-\subsection{Pattern Matching}
+\subsubsection{Pattern Matching}
 
 \begin{itemize}
   \item \textit{The} idiomatic Haskell way to define a function by cases:\\
