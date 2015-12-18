@@ -5,7 +5,7 @@
 \section{Haskell Ramp-Up} % (fold)
 \label{cha:haskell_ramp_up}
 
-(Read $\equiv$ as ``denotes the same value as'')
+(Read $\equiv$ as ''denotes the same value as'')
 
 \begin{itemize}
     \item Apply f to value e: \codeline{f e} (juxtaposition, ``apply'', binary operator \textvisiblespace, Haskell speak: infixL 10 \textvisiblespace)
@@ -14,7 +14,7 @@
     \item Function composition:
     \begin{itemize}
         \item \codeline{(g . f) e |$\equiv$| g (f e) --(. is something like mathematical |$\circ$| ``after'')}
-        \item Alternative ``apply''-operator \codeline{|\$|} (lowest precedence, associates to the right, infixR 0 \$):\\
+        \item Alternative ''apply''-operator \codeline{|\$|} (lowest precedence, associates to the right, infixR 0 \$):\\
             \codeline{g |\$| f |\$| e |$\equiv$| g |\$| (f |\$| e) |$\equiv$| g (f e)}
         \item Prefix application of binary infix operator $\otimes$: \codeline{|$(\otimes)$| |$e_1$| |$e_2$| |$\equiv$| |$e_1$| |$\otimes$| |$e_2$|} 
         \item Infix application of binary function f: \codeline{|$e_1$| `f` |$e_2$| |$\equiv$| f |$e_1$| |$e_2$|}:

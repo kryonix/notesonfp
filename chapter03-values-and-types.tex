@@ -50,14 +50,16 @@ Bool            		& Boolean                                       	  & True, Fal
 
 \subsection{Currying}
 
+\begin{multicols}{2}
 \begin{itemize}
   \item \textit{Recall}: \codeline{e|$_1$| ++ e|$_2$| |$\equiv$| (++) e|$_1$| e|$_2$|}
   \item \codeline{(++) e|$_1$| e|$_2$| |$\equiv$| ((++) e|$_1$|) e|$_2$|}
   \item Function application happens one argument at a time. \\ (\textbf{Currying}, Haskell B. Curry)
   \item Type of n-ary function is \\ \codeline{a|$_1$| -> a|$_2$| -> |\dots| a|$_n$| -> b}
-  \item Type fun -> associates to the right, read above type as \\ \codeline{a|$_1$| -> (a|$_2$| -> (\dots (|$a_n$| -> |$b$|)))}
+  \item Type fun \codeline{->} associates to the right, read above type as \\ \codeline{a|$_1$| -> (a|$_2$| -> (\dots (|$a_n$| -> |$b$|)))}
   \item Enables \textbf{Partial Application}
 \end{itemize}
+\end{multicols}
 
 
 \subsection{Defining Values (and thus functions)}
@@ -65,7 +67,7 @@ Bool            		& Boolean                                       	  & True, Fal
 \begin{itemize}
   \item \codeline{=} binds names to values. Names must not start with A-Z (Haskell style: camelCase)
   \item Define constant (0-ary function) c. Value of c is value of expression e. \\ \codeline{c = e}
-  \item Define n-ary function f with arguments x$_i$. f may occur in e. \\ \codeline{f |$x_1$| |$x_2$| \dots |$x_n$| = e}
+  \item Define n-ary function f with arguments x$_i$. f may occur in e. \\ \codeline{f |$x_1$| |$x_2$| |\dots| |$x_n$| = e}
   \item A Haskell program is a set of bindings.
   \item Good style: give type assigmnents for top-level (global) bindings:\\
   \begin{Haskell}

@@ -13,16 +13,16 @@ In Functional Programming, expressions are formed by applying functions to value
     \item Functions are values (just like numbers, text \dots)
 \end{enumerate}
 
-\vspace{9pt}\begin{center}\begin{tabular}{|c|c|c|}\hline
+\begin{center}\begin{tabular}{|c|c|c|}\hline
 \rowcolor{grau}                         & Functional                                & Imperative        \\\hline
                 program construction    & function application and composition      & statement sequencing      \\\hline
                 execution               & reduction (expression evaluation)         & state changes             \\\hline
                 semantics               & lambda calculus                           & complex (denotational)    \\\hline
-\end{tabular}\end{center}\vspace{9pt}
+\end{tabular}\end{center}
 
 \subsection*{Example}
 $n \in \N, n \ge 2 $ is a prime number \textit{if} the set of non-trivial factors is empty:\\
-$$ n \text{ is prime} \Leftrightarrow \{\ m\ |\ m \in \{2,\dots, n-1\},\ n \mod m = 0 \} = \emptyset $$
+$$ n \text{ is prime} \Leftrightarrow \{\ m\ |\ m \in \{2,\dots, n-1\},\ n \bmod m = 0 \} = \emptyset $$
 \\
 \Haskellcode{../material/isPrime.hs}
 
