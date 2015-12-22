@@ -12,13 +12,13 @@ The \textbf{type assigmnent ::} is either given explicitly or inferred by the co
 \begin{center}
 \begin{tabular}{|c|c|c|}\hline
 \rowcolor{grau}     
-Type					& Description                                   	& values                                \\\hline
-Int						  & fixed-prec. integer                            & 0, 1, (-42)                           \\\hline
-Integer         	   & arbitrary prec. integer                        & 10\textasciicircum 100                \\\hline
-Float, Double      & single/double floating point (IEEE)    & 0.1, 1e02                             \\\hline
-Char            		& Unicode character                             & ``x'', ``\textbackslash t'',  ``$\triangle$'', ``\textbackslash 8710''\\\hline
-Bool            		& Boolean                                       	  & True, False                           \\\hline
-()              		   & Unit                                          			& ()                                    \\\hline
+Type           & Description                            & values                                \\\hline
+Int            & fixed-prec. integer                    & 0, 1, (-42)                           \\\hline
+Integer        & arbitrary prec. integer                & 10\textasciicircum 100                \\\hline
+Float, Double  & single/double floating point (IEEE)    & 0.1, 1e02                             \\\hline
+Char           & Unicode character                      & ``x'', ``\textbackslash t'',  ``$\triangle$'', ``\textbackslash 8710''\\\hline
+Bool           & Boolean                                & True, False                           \\\hline
+()             & Unit                                   & ()                                    \\\hline
 \end{tabular}
 \end{center}
 
@@ -31,9 +31,10 @@ Bool            		& Boolean                                       	  & True, Fal
 \end{itemize}
 \begin{center}
 \begin{tabular}{|c|c|c|}\hline
-\rowcolor{grau}     Type            & Description                                   & values                        \\\hline
+\rowcolor{grau}
+Type                       & Description                                   & values                        \\\hline
 \codeline{(a, b)}          & pairs of values of type a, b                  & \codeline{(1, True) :: (Int, Bool)}      \\\hline
-\codeline{(a|$_1$|, a|$_2$|, |\dots| a|$_n$|)} & n-tuples                          &                               \\\hline
+\codeline{(a|$_1$|, a|$_2$|, |\dots| a|$_n$|)} & n-tuples                  &                               \\\hline
 \codeline{[a]}             & list of values of type a                      & \codeline{[True, False] :: [Bool], []::[a]}          \\\hline
 \codeline{Maybe a}         & optional value of type a                      & \multirow{2}{3.7cm}{\codeline{Just 42 :: Maybe Int} 
                                                                                          \codeline{Nothing :: Maybe a}}    \\
@@ -49,14 +50,14 @@ Bool            		& Boolean                                       	  & True, Fal
 \end{center}
 
 \subsection{Currying}
-
+Currying is the technique of translating the evaluation of a function that takes multiple arguments into evaluating a sequence of functions, each with a single argument.
 \begin{multicols}{2}
 \begin{itemize}
   \item \textit{Recall}: \codeline{e|$_1$| ++ e|$_2$| |$\equiv$| (++) e|$_1$| e|$_2$|}
   \item \codeline{(++) e|$_1$| e|$_2$| |$\equiv$| ((++) e|$_1$|) e|$_2$|}
   \item Function application happens one argument at a time. \\ (\textbf{Currying}, Haskell B. Curry)
   \item Type of n-ary function is \\ \codeline{a|$_1$| -> a|$_2$| -> |\dots| a|$_n$| -> b}
-  \item Type fun \codeline{->} associates to the right, read above type as \\ \codeline{a|$_1$| -> (a|$_2$| -> (\dots (|$a_n$| -> |$b$|)))}
+  \item Type fun \codeline{->} associates to the right, read above type as \\ \codeline{a|$_1$| -> (a|$_2$| -> (|\dots| (|$a_n$| -> |$b$|)))}
   \item Enables \textbf{Partial Application}
 \end{itemize}
 \end{multicols}
@@ -69,7 +70,7 @@ Bool            		& Boolean                                       	  & True, Fal
   \item Define constant (0-ary function) c. Value of c is value of expression e. \\ \codeline{c = e}
   \item Define n-ary function f with arguments x$_i$. f may occur in e. \\ \codeline{f |$x_1$| |$x_2$| |\dots| |$x_n$| = e}
   \item A Haskell program is a set of bindings.
-  \item Good style: give type assigmnents for top-level (global) bindings:\\
+  \item Good style: give type assignments for top-level (global) bindings:\\
   \begin{Haskell}
 f :: a@$_1$@ -> a@$_2$@ -> b
 f x@$_1$@ x@$_2$@ = e
@@ -77,8 +78,7 @@ f x@$_1$@ x@$_2$@ = e
 \end{itemize}
 
 \subsubsection{Guards}
-
-Guards are conditional expressions (something like ``switch'' in Java).
+Guards are conditional expressions (something like ''switch'' in Java).
 They are a lot more readable and more powerful than \codeline{if |\dots| then |\dots| else |\dots|}.
 
 Guards are introduced by \codeline{|}:\\
@@ -153,13 +153,13 @@ f p@$_n1$@ @\dots@ p@$_nk$@ = e@$_k$@
 \begin{center}
 \begin{tabular}{|c|c|c|}\hline
 \rowcolor{grau}   
-Pattern         & Matches If                & Bindings in e$_r$     \\\hline
-  constant c      & x$_i$ == c                  &                     \\\hline
-  variable v      & always                    & v $\equiv$ x$_i$      \\\hline
-  wildcard \_      & always                    &                       \\\hline
-  tuple (p$_1$, \dots p$_m$)  & components of x$_i$ match patterns p    & \\\hline
-  []              & x$_i$ == []                 &                     \\\hline
-  (p$_1$ : p$_2$)     & head x$_i$ matches p$_1$, tail x$_i$ matches p$_2$    & \\\hline
+Pattern                     & Matches If                              & Bindings in e$_r$   \\\hline
+constant c                  & x$_i$ == c                              &                     \\\hline
+variable v                  & always                                  & v $\equiv$ x$_i$    \\\hline
+wildcard \_                 & always                                  &                     \\\hline
+tuple (p$_1$, \dots p$_m$)  & components of x$_i$ match patterns p    &                     \\\hline
+[]                          & x$_i$ == []                             &                     \\\hline
+(p$_1$ : p$_2$)             & head x$_i$ matches p$_1$, tail x$_i$ matches p$_2$    & \\\hline
 \end{tabular}
 \end{center}
 
@@ -167,9 +167,7 @@ Pattern         & Matches If                & Bindings in e$_r$     \\\hline
 \Haskellcode{../material/take.hs}
 \Haskellcode{../material/mergesort.hs}
 
-
 \subsection{Algebraic Data Types}
-
 (also known as \textbf{Sum-of-Product-Types})
 
 \begin{itemize}
@@ -196,7 +194,7 @@ data T a@$_1$@ a@$_2$@ @\dots@ a@$_n$@ = K@$_1$@ b@$_{11}$@ @\dots@ b@$_{1_{n_1}
   \rowcolor{grau} c       & operations                          \\\hline
                   Eq      & equality (==, /=)                   \\\hline
                   Show    & printing (show)                     \\\hline
-                  Ord     & ordering ($<$, $<=$, max)               \\\hline
+                  Ord     & ordering ($<$, $<=$, max)           \\\hline
                   Enum    & enumeration                         \\\hline
                   Bounded & minBound, maxBound                  \\\hline
   \end{tabular}\end{center}

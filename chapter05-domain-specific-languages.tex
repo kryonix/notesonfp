@@ -8,7 +8,7 @@
 a.k.a. \textbf{DSLs}
 
 \begin{itemize}
-    \item ''small'' languages designed to easily and directly express the concepts/idioms of a specific domain. \underline{Not} turing-complete in general.
+    \item ''small'' languages designed to easily and directly express the concepts/idioms of a specific domain. \underline{Not} Turing-complete in general.
     \item Examples:
         \begin{center}\begin{tabular}{|c|c|}\hline
         \rowcolor{grau} Domain          & DSLs                                  \\\hline
@@ -20,8 +20,8 @@ a.k.a. \textbf{DSLs}
         \end{tabular}\end{center}
     \item Functional Languages make good hosts for \textbf{embedded DSLs}:
         \begin{itemize}
-            \item algebraic datatypes (e.g. to model ASTs)
-            \item higher-order functions (abstractionn, control constructs)
+            \item algebraic data types (e.g. to model ASTs)
+            \item higher-order functions (abstraction, control constructs)
             \item lightweight syntax (layout / whitespace, non-alphabetic ids)
         \end{itemize}
 \end{itemize}
@@ -199,7 +199,7 @@ data T a@$_1$@ a@$_2$@ @\dots@ a@$_n$@ where
                 fail always             & $\emptyset$   & \codeline{fail :: Pattern a}              \\\hline
                 alternative             & |             & \parbox[t]{9cm}{\codeline{alt :: Pattern a -> Pattern a -> Pattern a}}  \\\hline
                 sequence                & .             & \parbox[t]{9cm}{\codeline{seq :: (a -> b -> c) ->} \\ \codeline{Pattern a -> Pattern b -> Pattern c}} \\\hline
-                repitition              & *             & \codeline{rep :: Pattern a -> Pattern [a]} \\\hline
+                repetition              & *             & \codeline{rep :: Pattern a -> Pattern [a]} \\\hline
 \end{tabular}\end{center}\vspace{9pt}
 
 % \codefile{haskell}{caption={PatternMatch.hs}, label={PatternMatch.hs}}{./PatternMatch.hs}
