@@ -1,0 +1,115 @@
+%!TEX root = fp.tex
+
+\section{Lazy Evaluation}
+To execute a program, Haskell reduces expressions to values. Haskell uses normal order reduction to select the next expression to reduce:
+
+\begin{enumerate}
+   \item The outermost reducible expression (redex) is reduced first
+   \item $\Rightarrow$ Function applications are reduced first before their arguments.
+   \item If no further redex is found, the expression is in normal form and reduction terminates.
+\end{enumerate}
+
+\begin{Haskell}
+fst :: (a, b) -> a
+fst (x, y) = x
+sqr :: Num a => a -> a
+sqr x = x * x
+
+-- ->: reduces to
+fst (sqr (1+3), sqr 2) -> sqr (1 + 3) [fst]
+                       -> (1+3) * (1+3) [sqr]
+                       -> 4 * 4 [+/+]
+                       -> 16 [*]
+\end{Haskell}
+
+Haskell avoids the duplication of work through graph reduction. Expression are shared (referenced more than once) instead of duplicated.\\
+Lazy evaluation: normal order reduction and sharing.
+
+\subsection{WHNF}
+An expression e is in weak head normal form (WHNF) if it is of the following form
+\begin{enumerate}
+   \item v (where v is an atomic value \mint{Haskell}{Integer, Bool, Char, ...})
+   \item \mint{Haskell}{c e1 e2 ... en} (where c is an n-ary constructor, like \mint{Haskell}{(:)})
+   \item \mint{Haskell}{f e1 e2 ... em} (where f is an n-ary function, $m<n$)
+\end{enumerate}
+
+Haskell reduces values to WHNF only (stop criterium for reduction) unless we request reduction to normal form (e.g. when printing results).\\
+
+Example expressions in WHNF:
+\begin{itemize}
+   \item \mint{Haskell}{42 --1.}
+   \item \mint{Haskell}{(sqr 2, sqr 4) --2. (,)}
+   \item \mint{Haskell}{f x : map f xs --2. (:)}
+   \item \mint{Haskell}{Just (40+2) --2. Just}
+   \item \mint{Haskell}{(* (40+2)) --3. * binär}
+   \item \mint{Haskell}{(\x -> 40+2) --3. unary function w/o args}
+\end{itemize}
+
+\subsection{Lazy Evaluation and Bottom}
+Some Haskell expressions have the value bottom. Examples: \mint{Haskell}{error, undefined, bomb}. Lazy evaluation admits functions that return a non-bottom value even if they receive bottom as argument (also: non-strict functions).
+N-ary function f is strict in its i-th argument, if \mint{Haskell}{f x1 .. xi-1 bottom xi+1 ... xn = bottom}
+Examples:
+\begin{itemize}
+   \item \mint{Haskell}{const :: a -> b -> a --strict in first, non-strict in second argument}
+   \item \mint{Haskell}{(&&) :: Bool -> Bool -> Bool -- dito}
+\end{itemize}
+If a function pattern matches on an argument, Haskell semantics define it to be strict in that argument.\\
+Example:\\
+\begin{Haskell}
+data T = T Int
+f :: T -> Int
+f (T x) = 42
+
+f undefined -> undefined
+f (T undefined) -> 42
+\end{Haskell}
+
+
+%14.01.2016
+
+\section{Infinite Lists (Data Structures)}
+One consequence of lazy evaluation: programs can handle infinite Lists as long as any run will inspect only a finite prefix of such a list.
+Enables a modular programming style:
+\begin{enumerate}
+   \item generator functions produce an infinite number of solutions / approximations / \dots
+   \item test functions select one (or finite number of) solutions from this infinite list.
+\end{enumerate}
+
+\subsection{Example: Newton-Raphson square root approximation}
+Iteratively approximate the square root of x:
+\begin{enumerate}
+   \item $a_0 = \tfrac{x}{2}$
+   \item $a_{i+1} = \tfrac{a_i+\tfrac{x}{a_i}}{2}$
+\end{enumerate}
+
+\Haskellcode{../material/newton-raphson.hs}
+
+%\begin{Haskell}
+%--1. Generator:
+%iterate :: (a -> a) -> a -> [a]
+%--iterate f x @\equiv@ [x, f x, f (f x), @\dots@]
+%iterate f x = x : iterate x (f x)
+%
+%--2. Test:
+%within :: (Ord a, Num a) => a -> [a] -> a
+%--within eps xs : consumes xs until adjacent elements differ less than eps (for the first time)
+%within eps (@x_1@:@x_2@:xs) | abs (@x_1@-@x_2@) <= eps = @x_2@
+%                                                | otherwise                                = within eps (@x_2@:xs)
+%\end{Haskell}
+
+\subsection{Example: Tic-Tac-Toe game tree}
+Build the (potentially huge) tree of possible moves for the Tic-Tac-Toe board game. Evaluate promise of game position. 
+Plan:
+\begin{enumerate}
+   \item Find representation of game position (board + player next up)
+\begin{verbatim}
+|1|2|3| next: x
+|4|5|6| square #6: open 
+|0|x|0| spare #9: occupied by player 0
+\end{verbatim}
+   \item Provide pretty-printing for game positions.
+   \item Define initial position and possible moves: \mint{Haskell}{moves :: Position -> [Position]}
+   \item Evaluate a given position: \mint{Haskell}{static :: Position -> Int} (1 / -1: x/0 won the game, 0 draw)
+\end{enumerate}
+
+%\Haskellcode{../material/tic-tac-toe.hs}
