@@ -110,6 +110,10 @@ Plan:
    \item Provide pretty-printing for game positions.
    \item Define initial position and possible moves: \mint{Haskell}{moves :: Position -> [Position]}
    \item Evaluate a given position: \mint{Haskell}{static :: Position -> Int} (1 / -1: x/0 won the game, 0 draw)
+   \item Build a game tree of positions: \mint{Haskell}{gameTree :: Position -> Tree Position}
+   \item Rather than simple static evaluation, now evaluate positions based on possible game futures. $\Rightarrow$ in game tree, perform evaluation bottom up.
+   \item Optimization ($\alpha-\beta$ algorithm)
 \end{enumerate}
 
+Code: tic-tac-toe.hs
 %\Haskellcode{../material/tic-tac-toe.hs}

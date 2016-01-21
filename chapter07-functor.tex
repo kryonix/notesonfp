@@ -1,0 +1,57 @@
+%!TEX root = fp.tex
+
+\section{Functors}
+Type class Functor embodies the application of a function to the elements (or: inside) of a structure, which leaving structure (or: outside) alone.
+
+\subsection{Examples}
+\begin{Haskell}
+map :: (a -> b) -> [a] -> [b]
+mapTree :: (a -> b) -> Tree a -> Tree b
+
+--Note: f is a type constructor that receives exactly one argument
+--(Functor is also called a constructor class).
+class Functor f where
+   fmap :: (a -> b) -> f a -> f b
+   
+--Examples:
+instance Functor [] where
+   fmap = map
+   
+instance Functor Tree where
+   fmap = mapTree
+   
+instance Functor Maybe where
+   fmap f (Just x) = Just (f x)
+   fmap f Nothing  = Nothing
+\end{Haskell}
+
+\begin{minipage}{\textwidth}
+Type constructors can be partially applied. Uses prefix notation:\\
+\begin{Haskell}
+a -> b @$\equiv$@ (->) a b
+(a, b) @$\equiv$@ (,) a b
+[a] @$\equiv$@ [] a
+
+--Examples (defines type constructors):
+type Flagged = (,) Bool
+type Indexed (->) Int
+--MayFail e a: computation may yield value a or fail with error e
+type MayFail e = Either e
+
+instance Functor (Either e) where
+   fmap f (Left e)  = Left e
+   fmap f (Right x) = Right (f x)
+   
+instance Functor Flagged where
+--fmap :: (a -> b) -> (Bool, a) -> (Bool, b)
+   fmap f (b, x) = (b, f x)
+   
+instance Functor Indexed where
+   fmap f g = f . g
+
+fmap id @$\equiv$@ id
+fmap (f . g) = fmap f . fmap g
+\end{Haskell}
+\end{minipage}
+
+%\Haskellcode{../material/round.hs}
