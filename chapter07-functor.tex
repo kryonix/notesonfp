@@ -49,9 +49,80 @@ instance Functor Flagged where
 instance Functor Indexed where
    fmap f g = f . g
 
+--Functor Laws
 fmap id @$\equiv$@ id
 fmap (f . g) = fmap f . fmap g
 \end{Haskell}
 \end{minipage}
-
 %\Haskellcode{../material/round.hs}
+
+\subsection{Kinds - Types for Types}
+
+\begin{center}\begin{tabular}{|c|c|c|}\hline
+\rowcolor{grau} kind           & describes...                   & example\\\hline
+\codeline{*}                 & types                             & \codeline{Int, Bool, (Bool, Int), [Char], ...} \\\hline
+\codeline{* -> *}         & unary type constructor  & \codeline{Maybe,  []}\\\hline
+\codeline{* -> * -> *} & binary type constructor & \codeline{Either, (,), (->)}\\\hline
+\end{tabular}\end{center}
+
+
+\section{Applicative}
+\begin{Haskell}
+--Compare:
+(@$\$$@) :: (a -> b) -> a -> b
+fmap :: Functor f => (a -> b) -> f a -> f b --<@$\$$@>
+(<*>) :: Applicative f => f (a -> b) -> f a -> f b
+\end{Haskell}
+
+Read \codeline{<*>} as (ap)ply, ''tiefighter''.
+
+\begin{Haskell}
+class Functor f => Applicative f where
+   pure :: a -> f a
+   (<*>) :: f (a -> b) -> f a -> f b
+   
+--Make any Applicative f a Functor:
+fmap g x = pure g <*> x
+\end{Haskell}
+
+Applicative embodies
+\begin{enumerate}
+\item function \underline{application} on the level of (contained) values.
+\item \underline{combination} on the level of structures.
+\end{enumerate}
+
+\subsection{Applicative instances}
+\begin{Haskell}
+instance Applicative Maybe where
+   pure x = Just x
+   Just f <*> Just x = Just (f x)
+   _ <*> _ = Nothing
+   
+instance Monoid c => Applicative ((,) c) where
+   pure x = (mempty, x)
+   (@$c_1$@, f) <*> (@$c_2$@, x) = (@$c_1$@ `mappend`@$c_2$@, f x)
+   
+instance Applicative [] where
+   pure x = [x]
+   fs <*> xs = [f x | f <- fs, x <- xs]
+\end{Haskell}
+
+\section{Interlude: Monoid}
+
+Type class Monoid a represents combinable values of type a:
+
+\begin{Haskell}
+class Monoid a where
+   mempty :: a -- empty, neutral element for mappend
+   mappend :: a -> a -> a -- combination
+   mconcat :: [a] -> a
+\end{Haskell}
+
+Examples: $(0, +), (1, \cdot), (\text{true}, \land), (\text{false}, \lor), (\{\}, \cup), ([], (++))$
+
+\subsection{Monoid Laws}
+\begin{Haskell}
+mempty `mappend`xs @$\equiv$@ xs
+xs `mappend`(ya `mappend`zs) @$\equiv$@ (xs `mappend`ys) `mappend`zs``
+mconcat xs @$\equiv$@ foldr mempty mappend xs
+\end{Haskell}
