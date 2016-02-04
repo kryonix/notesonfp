@@ -1,0 +1,132 @@
+%!TEX root = fp.tex
+
+\section{Sequencing Functions}
+\begin{Haskell}
+(.) :: (b -> c) -> (a -> b) -> (a -> c)
+f . g = @$\backslash$@x -> f (g x)
+
+(>=>) :: (a -> b) -> (b -> c) -> (a -> c)
+f >=> g = g . f
+
+f1 >=> f2 >=> ... >=> fn -- composes the fi in left-to-right order
+-- (>=>, id) forms a monoid.
+\end{Haskell}
+
+\subsection{Sequencing partial functions (a -> Maybe b)}
+Return \codeline{Nothing} as soon as first function in pipeline returns \codeline{Nothing}
+
+\begin{Haskell}
+(>=>) :: (a -> Maybe b) -> (b -> Maybe c) -> (a -> Maybe c)
+f >=> g = @$\backslash$@x -> case f x of
+                                       Nothing -> Nothing
+                                       Just y -> g y
+\end{Haskell}
+
+\subsection{Sequencing exception-generating functions (a -> Exc b)}
+\begin{Haskell}
+type Exc b = Either Error b
+type Error = String
+\end{Haskell}
+
+Exceptions are propagated once occurred:
+
+\begin{Haskell}
+(>=>) :: (a -> Exc b) -> (b -> Exc c) -> (a -> Exc c)
+f >=> g = @$\backslash$@x -> case f x of
+                                       Left err -> Left err
+                                       Right y -> g y
+\end{Haskell}
+
+\subsection{Sequencing non-deterministic functions}
+\begin{Haskell}
+(a -> NonDet b)
+--Non-determinism: any answer in a list of answers:
+type NonDet b = [b]
+--Take all possible answers into account:
+(>=>) :: (a -> NonDet b) -> (b -> NonDet c) -> (a -> NonDet c)
+f >=> g = @$\backslash$@x -> concat [g y | y <- f x]
+\end{Haskell}
+
+\subsection{Sequencing ``stateful'' functions}
+\begin{Haskell}
+a -> State -> (State, b)
+--State Transformer:
+type ST b = State -> (State, b)
+--Stateful function: a -> ST b
+(>=>) :: (a -> ST b) -> (b -> ST c) -> (a -> ST c)
+f >=> g = @$\backslash$@ x s0 -> let (s1, y) = f x s0
+                                       let (s2, z) = g y s1 -- <=> in g y s1
+                                       in (s2, z)
+\end{Haskell}
+
+\subsection{Sequencing side-effecting functions}
+\begin{Haskell}
+a -> World -> (World, b)
+--Side effects: functions consume current world
+--return new world along with result:
+type World = ... -- abstract (defined by Haskell runtime)
+type IO b = World -> (World, b)
+--Value of type IO b: an action that
+--1. when performed has a side-effect on the world, and then
+--2. returns a value of type b.
+\end{Haskell}
+
+Haskell build-ins:
+\begin{itemize}
+	\item \codeline{print :: Show a => a -> IO ()}
+	\item \codeline{putStrLn :: String -> IO ()}
+	\item \codeline{getLine :: IO String}
+	\item \codeline{readFile :: FilePath -> IO String}
+\end{itemize}
+
+\section{Type class Monad}
+\begin{Haskell}
+class Applicative m => Monad m where
+   return :: a -> m a
+   (>>=) :: m a -> (a -> m b) -> m b -- bind
+\end{Haskell}
+
+\subsection{Lifting}
+
+\begin{center}\begin{tabular}{|c|c|}\hline
+\rowcolor{grau} Monad & Lifting (return x) \\ \hline
+Maybe & \codeline{Just x}\\
+Exc & \codeline{Right x}\\
+NonDet & \codeline{[x]}\\
+ST & \codeline{|$\backslash$|s -> (s , x)} \\ \hline
+\end{tabular}\end{center}
+
+\begin{Haskell}
+--Make Maybe an instance of Monad:
+instance Monad Maybe where
+   return = Just
+   Nothing >>= g = Nothing
+   Just y >>= g = g y
+
+--Kleisli composition
+(>=>) :: Monad m => (a -> m b) -> (b -> m c) -> (a -> m c)
+f >=> g = @$\backslash$@x -> f x >>= g
+\end{Haskell}
+
+Let m be a Monad. Then m is also an Applicative:
+
+\begin{Haskell}
+pure = return
+u <*> v = u >>= @$\backslash$@f -> v >>= @$\backslash$@x -> return (f x)
+\end{Haskell}
+
+\begin{Haskell}
+(@\$@) :: (a -> b) -> a -> b
+(<@\$@>) :: Functor m => (a -> b) -> m a -> m b
+(<*>) :: Applicative m => m (a -> b) -> m a -> m b
+(=<<) :: Monad m => (a -> m b) -> m a -> m b -- (=<<) = flip (>>=)
+\end{Haskell}
+
+\subsection{do-Notation}
+\begin{Haskell}
+--(e : expression of type m a, es: sequence of ;-separated expression):
+do { e } @$\equiv$@ e
+do {x <- e; es} @$\equiv$@ e >>= @$\backslash$@x -> do {es}
+do {e; es} @$\equiv$@ e >>= @$\backslash$@_ -> do {es}
+do {let v = x; es} = let v = x in do {es}
+\end{Haskell}
